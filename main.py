@@ -1,6 +1,6 @@
 from Tkinter import *
 from datetime import datetime, timedelta
-from subprocess import call
+import subprocess
 
 
 #Create & Configure root 
@@ -19,13 +19,9 @@ for row_index in range(2):
     for col_index in range(4):
         Grid.columnconfigure(frame, col_index, weight=1)
         
-        
-        
 
 def iso_button():
 
-    
-    
     def iso_ok():
         print(["gphoto2", "--set-config=/main/imgsettings/iso=", "seltext"])
         print("OKseltext : ", seltext)
@@ -96,9 +92,28 @@ def aperture_button():
     label2 = Label(frame, text='Aperture : ' + seltext)
     label2.grid(row=0, column=2)
     
+    
+    
+    
 def runtest():
     call(["gphoto2", "-v"])
     
+def info_button():
+    for widget in frame.winfo_children():
+        widget.destroy()
+    btn_back = Button(frame, text='Back', command=init_interface) #create a button inside frame
+    btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=N+W) 
+
+    
+    p = subprocess.Popen("gphoto2 --auto-detect", stdout=subprocess.PIPE, shell=True)
+    (output, err) = p.communicate()
+     
+    ## Wait for gphoto2 to terminate. Get return returncode ##
+    p_status = p.wait()
+    print "Command output : ", output
+    print "Command exit status/return code : ", p_status
+    label = Label(frame, text=output)
+    label.grid(row=0, column=1)
 
 
 def init_interface():
@@ -116,17 +131,18 @@ def init_interface():
     btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=N+S+E+W)
     btn_quit = Button(frame, text='Quit', command=quit) #create a button inside frame
     btn_quit.grid(row=1, column=2, padx=25, pady=25, sticky=N+S+E+W)   
-    btn_info = Button(frame, text='Infos') #create a button inside frame
+    btn_info = Button(frame, text='Infos', command=info_button) #create a button inside frame
     btn_info.grid(row=0, column=3, padx=25, pady=25, sticky=N+S+E+W) 
     btn_ = Button(frame, text='') #create a button inside frame
     btn_.grid(row=1, column=3, padx=25, pady=25, sticky=N+S+E+W) 
 
 
 
-
         
 
 init_interface()
+
+
 
 
 
