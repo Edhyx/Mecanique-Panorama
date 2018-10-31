@@ -16,7 +16,7 @@ frame.grid(row=0, column=0, sticky=N+S+E+W)
 #Create a 5x10 (rows x columns) grid inside the frame
 for row_index in range(2):
     Grid.rowconfigure(frame, row_index, weight=1)
-    for col_index in range(3):
+    for col_index in range(4):
         Grid.columnconfigure(frame, col_index, weight=1)
         
         
@@ -113,10 +113,13 @@ def init_interface():
     btn_inter = Button(frame, text='Intervall', command=runtest) #create a button inside frame
     btn_inter.grid(row=1, column=0, padx=25, pady=25, sticky=N+S+E+W) 
     btn_live = Button(frame, text='Live View') #create a button inside frame
-    btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=N+S+E+W)  
+    btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=N+S+E+W)
     btn_quit = Button(frame, text='Quit', command=quit) #create a button inside frame
-    btn_quit.grid(row=1, column=2, padx=25, pady=25, sticky=N+S+E+W) 
-
+    btn_quit.grid(row=1, column=2, padx=25, pady=25, sticky=N+S+E+W)   
+    btn_info = Button(frame, text='Infos') #create a button inside frame
+    btn_info.grid(row=0, column=3, padx=25, pady=25, sticky=N+S+E+W) 
+    btn_ = Button(frame, text='') #create a button inside frame
+    btn_.grid(row=1, column=3, padx=25, pady=25, sticky=N+S+E+W) 
 
 
 
