@@ -20,6 +20,9 @@ for row_index in range(2):
         Grid.columnconfigure(frame, col_index, weight=1)
 
 
+
+
+
 def iso_button():
 
     def iso_ok():
@@ -53,9 +56,6 @@ def iso_button():
         sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
         iso = sub_chain[0:sub_chain.find("\n")]
         iso_list.append(iso)
-
-
-
 
     listbox = Listbox(frame)
     listbox.grid(row=1, column=1)
@@ -156,7 +156,7 @@ def init_interface():
 
 init_interface()
 
-
+print("Hello World")
 
 
 
