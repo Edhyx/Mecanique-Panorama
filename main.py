@@ -44,7 +44,6 @@ def iso_button():
         
     for widget in frame.winfo_children():
         widget.destroy()
-<<<<<<< HEAD
     iso_list = []
     p = subprocess.Popen("gphoto2 --get-config=/main/imgsettings/iso", stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
@@ -58,10 +57,8 @@ def iso_button():
         iso = sub_chain[0:sub_chain.find("\n")]
         iso_list.append(iso)
 
-=======
         
     iso_list = ["100", "200", "400", "800", "1600", "3200"]
->>>>>>> parent of 39af721... Added ISO function and get list of parameters from APN
     listbox = Listbox(frame)
     listbox.grid(row=1, column=1)
     listbox.bind("<<ListboxSelect>>", printer)
