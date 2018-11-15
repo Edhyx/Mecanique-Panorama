@@ -47,11 +47,17 @@ def iso_button():
     end_line = output.find("END")
     choice_line = output.find("Choice")
     sub_chain = output[choice_line:end_line]
+    print("sub chain : " + sub_chain)
 
-    while len(sub_chain)>6:
+    while len(sub_chain)>10:
         sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
         sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
         iso = sub_chain[0:sub_chain.find("\n")]
+        sub_chain = sub_chain[sub_chain.find("\n")+1:len(sub_chain)]
+        try:
+            if int(iso)>51200:
+                break
+        except ValueError : print("")
         iso_list.append(iso)
 
 
