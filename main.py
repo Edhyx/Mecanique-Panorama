@@ -135,6 +135,13 @@ def info_button():
     label = Label(frame, text=output)
     label.grid(row=0, column=1)
 
+def intervall_button():
+    for widget in frame.winfo_children():
+        widget.destroy()
+    btn_back = Button(frame, text='Back', command=init_interface) #create a button inside frame
+    btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=N+W)
+
+
 
 def init_interface():
     for widget in frame.winfo_children():
@@ -145,7 +152,7 @@ def init_interface():
     btn_aper.grid(row=0, column=1, padx=25, pady=25, sticky=N+S+E+W)
     btn_speed = Button(frame, text='Speed') #create a button inside frame
     btn_speed.grid(row=0, column=2, padx=25, pady=25, sticky=N+S+E+W)
-    btn_inter = Button(frame, text='Intervall', command=runtest) #create a button inside frame
+    btn_inter = Button(frame, text='Intervall', command=intervall_button) #create a button inside frame
     btn_inter.grid(row=1, column=0, padx=25, pady=25, sticky=N+S+E+W)
     btn_live = Button(frame, text='Live View') #create a button inside frame
     btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=N+S+E+W)
@@ -153,7 +160,7 @@ def init_interface():
     btn_quit.grid(row=1, column=2, padx=25, pady=25, sticky=N+S+E+W)
     btn_info = Button(frame, text='Infos', command=info_button) #create a button inside frame
     btn_info.grid(row=0, column=3, padx=25, pady=25, sticky=N+S+E+W)
-    btn_ = Button(frame, text='') #create a button inside frame
+    btn_ = Button(frame, text='Start') #create a button inside frame
     btn_.grid(row=1, column=3, padx=25, pady=25, sticky=N+S+E+W)
 
 
