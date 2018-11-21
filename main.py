@@ -14,6 +14,8 @@ Grid.columnconfigure(root, 0, weight=1)
 frame=Frame(root)
 frame.grid(row=0, column=0, sticky=N+S+E+W)
 
+print "aaa"
+
 
 #Create a 5x10 (rows x columns) grid inside the frame
 for row_index in range(2):
