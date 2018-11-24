@@ -10,25 +10,24 @@ class View:
         print "Init view"
         self.root = Tk.Tk()
         self.root.geometry('800x480') #Dimensions of 7' Raspberry Pi screen
-
-        self.controller = Controller()
-        self.first_page(self.root, self.controller)
-
-    def get_iso(self):
-        self.iso_page(self.root, self.controller)
-
-    def first_page(self, root, controller):
-        Tk.Grid.rowconfigure(root, 0, weight=1)
-        Tk.Grid.columnconfigure(root, 0, weight=1)
-        self.frame = Tk.Frame(root)
-
+        Tk.Grid.rowconfigure(self.root, 0, weight=1)
+        Tk.Grid.columnconfigure(self.root, 0, weight=1)
+        self.frame = Tk.Frame(self.root)
         self.frame.grid(row=0, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 
+        self.controller = Controller()
+        self.first_page(self.frame, self.controller)
+
+
+
+    def first_page(self, frame, controller):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
         for row_index in range(2):
             Tk.Grid.rowconfigure(self.frame, row_index, weight=1)
         for col_index in range(4):
             Tk.Grid.columnconfigure(self.frame, col_index, weight=1)
-        btn_iso = Tk.Button(self.frame, text='ISO', command=self.get_iso) #create a button inside frame
+        btn_iso = Tk.Button(self.frame, text='ISO', command=lambda: self.iso_page(self.frame, self.controller)) #create a button inside frame
         btn_iso.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
         btn_aper = Tk.Button(self.frame, text='Aperture') #create a button inside frame
         btn_aper.grid(row=0, column=1, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
@@ -46,20 +45,32 @@ class View:
         btn_.grid(row=1, column=3, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 
 
-    def iso_page(self, root, controller):
-        Tk.Grid.rowconfigure(root, 0, weight=1)
-        Tk.Grid.columnconfigure(root, 0, weight=1)
-        self.frame = Tk.Frame(root)
+    def iso_page(self, frame, controller):
+        for widget in frame.winfo_children():
+                widget.destroy()
 
-        self.frame.grid(row=0, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
+        def ok_button():
+            print seltext
+            controller.set_iso(seltext)
+            self.first_page(self.frame, self.controller)
+
+        def printer(event, listbox, label2):
+            #print("SELECTED=",self.listbox.get(self.listbox.curselection()))
+            index = self.listbox.curselection()[0]
+            # get the line's text
+            global seltext
+            seltext= self.listbox.get(index)
+            self.label2["text"]="ISO : " + seltext
+            print("Seltext = ", seltext)
+
         for row_index in range(2):
             Tk.Grid.rowconfigure(self.frame, row_index, weight=1)
         for col_index in range(4):
             Tk.Grid.columnconfigure(self.frame, col_index, weight=1)
 
-        self.btn_back = Tk.Button(self.frame, text='Back', command=self.first_page) #create a button inside frame
+        self.btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
         self.btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
-        self.btn_ok = Tk.Button(self.frame, text='OK')
+        self.btn_ok = Tk.Button(self.frame, text='OK', command=ok_button)
         self.btn_ok.grid(row=1, column=2, padx=25, pady=25, sticky=Tk.S+Tk.E)
         self.label = Tk.Label(self.frame, text="ISO Parameter")
         self.label.grid(row=0, column=1)
@@ -68,10 +79,14 @@ class View:
         self.listbox = Tk.Listbox(self.frame)
         self.listbox.grid(row=1, column=1)
 
-        #self.listbox.bind("<<ListboxSelect>>", printer)
-
-        for item in self.controller.iso_function():
+        for item in self.controller.get_iso():
             self.listbox.insert(Tk.END, item)
+
+        self.listbox.bind("<<ListboxSelect>>", lambda _: printer(self, self.listbox, self.label2))
+
+
+
+
 
 
     def run(self):

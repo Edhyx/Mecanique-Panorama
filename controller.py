@@ -18,7 +18,7 @@ class Controller:
         (output, err) = p.communicate()
         print output
 
-    def iso_function(self):
+    def get_iso(self):
         iso_list = []
         p = subprocess.Popen("gphoto2 --get-config=/main/imgsettings/iso", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
@@ -40,6 +40,11 @@ class Controller:
 
         print iso_list
         return iso_list
+
+    def set_iso(self, selected_iso):
+        command = "gphoto2 --set-config=/main/imgsettings/iso=" + selected_iso
+        p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
 
     def aperture_function(self):
         pass
