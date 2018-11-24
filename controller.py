@@ -18,17 +18,37 @@ class Controller:
         (output, err) = p.communicate()
         print output
 
-        def iso_function(self):
-            pass
+    def iso_function(self):
+        iso_list = []
+        p = subprocess.Popen("gphoto2 --get-config=/main/imgsettings/iso", stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+        end_line = output.find("END")
+        choice_line = output.find("Choice")
+        sub_chain = output[choice_line:end_line]
+        print("sub chain : " + sub_chain)
 
-        def aperture_function(self):
-            pass
+        while len(sub_chain)>10:
+            sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
+            sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
+            iso = sub_chain[0:sub_chain.find("\n")]
+            sub_chain = sub_chain[sub_chain.find("\n")+1:len(sub_chain)]
+            try:
+                if int(iso)>51200:
+                    break
+            except ValueError : print("")
+            iso_list.append(iso)
 
-        def inter_function(self):
-            pass
+        print iso_list
+        return iso_list
 
-        def live_function(self):
-            pass
+    def aperture_function(self):
+        pass
 
-        def info_function(self):
-            pass
+    def inter_function(self):
+        pass
+
+    def live_function(self):
+        pass
+
+    def info_function(self):
+        pass
