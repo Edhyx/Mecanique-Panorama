@@ -100,9 +100,9 @@ class View:
 
         def shoot():
             # TODO: Put gphoto functions in controller
-            #p = subprocess.Popen("gphoto2 --capture-image-and-download -file %H%M%S", stdout=subprocess.PIPE, shell=True)
-            #(output, err) = p.communicate()
-            image = Image.open('C:/Users/megga/Desktop/IMG_Test.JPG')
+            
+            img_path = self.controller.take_picture()
+            image = Image.open(img_path)
 
             image = image.resize((495,315), Image.ANTIALIAS)
             photo = ImageTk.PhotoImage(image)

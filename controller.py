@@ -52,8 +52,11 @@ class Controller:
     def inter_function(self):
         pass
 
-    def live_function(self):
-        pass
+    def take_picture(self):
+        #TODO: set the output file
+        p = subprocess.Popen("gphoto2 --capture-image-and-download -file %H%M%S", stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+        return 'C:/Users/megga/Desktop/IMG_Test.JPG' #TODO: return the file path
 
     def info_function(self):
         pass
