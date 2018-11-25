@@ -4,6 +4,7 @@ except ModuleNotFoundError:
     import tkinter as Tk # python 3
 
 from controller import Controller
+from PIL import Image, ImageTk
 
 class View:
     def __init__(self):
@@ -35,7 +36,7 @@ class View:
         btn_speed.grid(row=0, column=2, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
         btn_inter = Tk.Button(self.frame, text='Intervall') #create a button inside frame
         btn_inter.grid(row=1, column=0, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_live = Tk.Button(self.frame, text='Live View') #create a button inside frame
+        btn_live = Tk.Button(self.frame, text='Live View', command=self.live_view_page) #create a button inside frame
         btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
         btn_quit = Tk.Button(self.frame, text='Quit', command=quit) #create a button inside frame
         btn_quit.grid(row=1, column=2, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
@@ -85,6 +86,35 @@ class View:
         self.listbox.bind("<<ListboxSelect>>", lambda _: printer(self, self.listbox, self.label2))
 
 
+    def live_view_page(self):
+        print "Live view selected"
+
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+
+        for row_index in range(2):
+            Tk.Grid.rowconfigure(self.frame, row_index, weight=1)
+        for col_index in range(4):
+            Tk.Grid.columnconfigure(self.frame, col_index, weight=1)
+
+
+        def shoot():
+            # TODO: Put gphoto functions in controller
+            #p = subprocess.Popen("gphoto2 --capture-image-and-download -file %H%M%S", stdout=subprocess.PIPE, shell=True)
+            #(output, err) = p.communicate()
+            image = Image.open('C:/Users/megga/Desktop/IMG_Test.JPG')
+
+            image = image.resize((495,315), Image.ANTIALIAS)
+            photo = ImageTk.PhotoImage(image)
+            label = Tk.Label(self.frame,image=photo,borderwidth=2,relief='solid')
+            label.grid(row=3, column=3, pady= 25,padx= 25, rowspan=2,columnspan=2, sticky=Tk.S)
+            label.image = photo # keep a reference!
+            label.pack()
+
+        btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
+        btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
+        btn_ok = Tk.Button(self.frame, text='Previsualisation', command=shoot)
+        btn_ok.grid(row=1, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
 
 
 
