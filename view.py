@@ -3,6 +3,7 @@ try:
 except ModuleNotFoundError:
     import tkinter as Tk # python 3
 
+from model import Model
 from controller import Controller
 from PIL import Image, ImageTk
 
@@ -16,7 +17,9 @@ class View:
         self.frame = Tk.Frame(self.root)
         self.frame.grid(row=0, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 
-        self.controller = Controller()
+        self.model = Model()
+        self.controller = Controller(self.model)
+
         self.first_page(self.frame, self.controller)
 
 
@@ -97,26 +100,40 @@ class View:
         for col_index in range(4):
             Tk.Grid.columnconfigure(self.frame, col_index, weight=1)
 
-
-        def shoot():
-            # TODO: Put gphoto functions in controller
-            
-            img_path = self.controller.take_picture()
+        def show_picture(img_path):
             image = Image.open(img_path)
-
             image = image.resize((495,315), Image.ANTIALIAS)
             photo = ImageTk.PhotoImage(image)
-            label = Tk.Label(self.frame,image=photo,borderwidth=2,relief='solid')
-            label.grid(row=3, column=3, pady= 25,padx= 25, rowspan=2,columnspan=2, sticky=Tk.S)
+            label.configure(image=photo)
             label.image = photo # keep a reference!
             label.pack()
 
+        def shoot():            
+            img_path = self.controller.take_picture()
+            show_picture(img_path)
+
+        def show_previous():
+            img_path = self.model.get_live_view_previous_picture()
+            if img_path != "":
+                show_picture(img_path)
+
+        def show_next():
+            img_path = self.model.get_live_view_next_picture()
+            print "selected img: " + img_path
+            if img_path != "":
+                show_picture(img_path)
+
+        label = Tk.Label(self.frame, borderwidth=2) # ,relief='solid'
+        label.grid(row=2, column=2, pady= 25,padx= 25, rowspan=2,columnspan=2, sticky=Tk.S)
+        
         btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
         btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
-        btn_ok = Tk.Button(self.frame, text='Previsualisation', command=shoot)
-        btn_ok.grid(row=1, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
-
-
+        btn_shoot = Tk.Button(self.frame, text='Previsualisation', command=shoot)
+        btn_shoot.grid(row=1, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
+        btn_previous = Tk.Button(self.frame, text='Previous', command=show_previous)
+        btn_previous.grid(row=2, column=1, padx=25, pady=25, sticky=Tk.N+Tk.W)
+        btn_next = Tk.Button(self.frame, text='Next', command=show_next)
+        btn_next.grid(row=2, column=2, padx=25, pady=25, sticky=Tk.N+Tk.W)
 
 
     def run(self):
