@@ -11,7 +11,7 @@ class Controller:
     def __init__(self, model):
 
         self.model = model
-        self.default_tmp_path = "." #TODO change with temp dir on Linux like /tmp
+        self.default_tmp_path = "tmp/" #TODO change with temp dir on Linux like /tmp
 
     def hello(self):
         p = subprocess.Popen("ls", stdout=subprocess.PIPE, shell=True)
@@ -58,7 +58,7 @@ class Controller:
             imgfiles = []
 
             print allfiles
-            
+
             for file in allfiles:
                 if file.lower().endswith('.png') or file.lower().endswith('.jpg'):
                     imgfiles.append(file)
@@ -69,12 +69,12 @@ class Controller:
         #TODO: set the output file
         #TODO: temp dir: self.default_tmp_path+"/img1.jpg"
 
-        p = subprocess.Popen("gphoto2 --capture-image-and-download -file %H%M%S", stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen("gphoto2 --capture-image-and-download -file tmp/%H%M%S", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
         self.refresh_live_view_pictures(self.default_tmp_path)
 
-        return 'C:/Users/megga/Desktop/IMG_Test.JPG' #TODO: return the file path
+        return 'aa.png' #TODO: return the name
 
     def info_function(self):
         pass

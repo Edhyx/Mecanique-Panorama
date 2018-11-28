@@ -101,14 +101,14 @@ class View:
             Tk.Grid.columnconfigure(self.frame, col_index, weight=1)
 
         def show_picture(img_path):
-            image = Image.open(img_path)
+            image = Image.open("img_path)
             image = image.resize((495,315), Image.ANTIALIAS)
             photo = ImageTk.PhotoImage(image)
             label.configure(image=photo)
             label.image = photo # keep a reference!
             label.pack()
 
-        def shoot():            
+        def shoot():
             img_path = self.controller.take_picture()
             show_picture(img_path)
 
@@ -125,7 +125,7 @@ class View:
 
         label = Tk.Label(self.frame, borderwidth=2) # ,relief='solid'
         label.grid(row=2, column=2, pady= 25,padx= 25, rowspan=2,columnspan=2, sticky=Tk.S)
-        
+
         btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
         btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
         btn_shoot = Tk.Button(self.frame, text='Previsualisation', command=shoot)
