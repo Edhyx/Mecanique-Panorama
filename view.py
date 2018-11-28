@@ -101,7 +101,7 @@ class View:
             Tk.Grid.columnconfigure(self.frame, col_index, weight=1)
 
         def show_picture(img_path):
-            image = Image.open("img_path)
+            image = Image.open("tmp/" + img_path)
             image = image.resize((495,315), Image.ANTIALIAS)
             photo = ImageTk.PhotoImage(image)
             label.configure(image=photo)

@@ -68,13 +68,31 @@ class Controller:
     def take_picture(self):
         #TODO: set the output file
         #TODO: temp dir: self.default_tmp_path+"/img1.jpg"
+        cmd = "gphoto2 --capture-image-and-download -file tmp/"
 
-        p = subprocess.Popen("gphoto2 --capture-image-and-download -file tmp/%H%M%S", stdout=subprocess.PIPE, shell=True)
+
+        allfiles = listdir(self.default_tmp_path)
+        imgfiles = []
+
+        print allfiles
+
+        for file in allfiles:
+            if file.lower().endswith('.png') or file.lower().endswith('.jpg'):
+                imgfiles.append(file)
+
+        nb = len(imgfiles)
+
+        cmd = cmd + str(nb+1)
+
+
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
         self.refresh_live_view_pictures(self.default_tmp_path)
 
-        return 'aa.png' #TODO: return the name
+        rtrn = str(nb) + ".jpg"
+
+        return rtrn #TODO: return the name
 
     def info_function(self):
         pass
