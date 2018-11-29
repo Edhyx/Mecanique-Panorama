@@ -68,7 +68,7 @@ class Controller:
     def take_picture(self):
         #TODO: set the output file
         #TODO: temp dir: self.default_tmp_path+"/img1.jpg"
-        cmd = "gphoto2 --capture-image-and-download -file tmp/"
+        cmd = "gphoto2 --capture-image-and-download --filename tmp/"
 
 
         allfiles = listdir(self.default_tmp_path)
@@ -82,7 +82,7 @@ class Controller:
 
         nb = len(imgfiles)
 
-        cmd = cmd + str(nb+1)
+        cmd = cmd + str(nb+1) + ".png"
 
 
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
@@ -90,7 +90,7 @@ class Controller:
 
         self.refresh_live_view_pictures(self.default_tmp_path)
 
-        rtrn = str(nb) + ".jpg"
+        rtrn = str(nb+1) + ".png"
 
         return rtrn #TODO: return the name
 

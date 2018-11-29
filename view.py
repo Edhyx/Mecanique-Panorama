@@ -6,6 +6,7 @@ except ModuleNotFoundError:
 from model import Model
 from controller import Controller
 from PIL import Image, ImageTk
+#import Image, ImageTk
 
 class View:
     def __init__(self):
