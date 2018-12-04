@@ -1,3 +1,10 @@
+'''
+    File name: controller.py
+    Author: Maxime FELICI, Meggan ESCARTEFIGUE, Mohamed Anis BEN MAHMOUD, Zeineb LAKNECH
+    Python Version: 2.7
+'''
+
+
 try:
     import Tkinter as Tk # python 2
 except ModuleNotFoundError:

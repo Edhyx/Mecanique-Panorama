@@ -1,4 +1,8 @@
-
+'''
+    File name: model.py
+    Author: Maxime FELICI, Meggan ESCARTEFIGUE, Mohamed Anis BEN MAHMOUD, Zeineb LAKNECH
+    Python Version: 2.7
+'''
 
 class Model:
 
