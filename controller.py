@@ -53,11 +53,32 @@ class Controller:
         p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
-    def aperture_function(self):
-        pass
 
-    def inter_function(self):
-        pass
+    def get_aperture(self):
+        aperture_list = []
+        p = subprocess.Popen("gphoto2 --get-config=/main/capturesettings/f-number", stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+
+        end_line = output.find("END")
+        choice_line = output.find("Choice")
+        sub_chain = output[choice_line:end_line]
+        print("sub chain : " + sub_chain)
+
+        while len(sub_chain)>10:
+            sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
+            sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
+            aperture = sub_chain[0:sub_chain.find("\n")]
+            sub_chain = sub_chain[sub_chain.find("\n")+1:len(sub_chain)]
+            aperture_list.append(aperture)
+
+        print aperture_list
+        return aperture_list
+
+
+        def set_aperture(self, selected_aperture):
+            command = "gphoto2 --set-config=/main/capturesettings/f-number=" + selected_aperture
+            p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+            (output, err) = p.communicate()
 
     def refresh_live_view_pictures(self, dir):
         if self.model != None:
