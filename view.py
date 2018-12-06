@@ -146,11 +146,11 @@ class View:
 
         def show_picture(img_path):
             image = Image.open("tmp/" + img_path)
-            image = image.resize((495,315), Image.ANTIALIAS)
+            image = image.resize((689,479), Image.ANTIALIAS)
             photo = ImageTk.PhotoImage(image)
             label.configure(image=photo)
             label.image = photo # keep a reference!
-            label.pack()
+            label.place(relx=0.138, rely=0.0, height=479, width=689)
 
         def shoot():
             img_path = self.controller.take_picture()
@@ -170,6 +170,7 @@ class View:
         label = Tk.Label(self.frame, borderwidth=2) # ,relief='solid'
         label.grid(row=2, column=2, pady= 25,padx= 25, rowspan=2,columnspan=2, sticky=Tk.S)
 
+        '''
         btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
         btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
         btn_shoot = Tk.Button(self.frame, text='Previsualisation', command=shoot)
@@ -178,7 +179,30 @@ class View:
         btn_previous.grid(row=2, column=1, padx=25, pady=25, sticky=Tk.N+Tk.W)
         btn_next = Tk.Button(self.frame, text='Next', command=show_next)
         btn_next.grid(row=2, column=2, padx=25, pady=25, sticky=Tk.N+Tk.W)
+        '''
 
+
+        self.Button1 = Tk.Button(self.frame)
+        self.Button1.place(relx=0.025, rely=0.771, height=30, width=80)
+        self.Button1.configure(activebackground="#d9d9d9")
+        self.Button1.configure(text='''Previous''', command=show_previous)
+        self.Button1.configure(width=74)
+
+        self.Button2 = Tk.Button(self.frame)
+        self.Button2.place(relx=0.025, rely=0.854, height=30, width=80)
+        self.Button2.configure(activebackground="#d9d9d9")
+        self.Button2.configure(text='''Next''', command=show_next)
+        self.Button2.configure(width=71)
+
+        self.Button3 = Tk.Button(self.frame)
+        self.Button3.place(relx=0.025, rely=0.042, height=30, width=80)
+        self.Button3.configure(activebackground="#d9d9d9")
+        self.Button3.configure(text='''Back''', command=lambda: self.first_page(self.frame, self.controller))
+
+        self.Button4 = Tk.Button(self.frame)
+        self.Button4.place(relx=0.025, rely=0.688, height=30, width=80)
+        self.Button4.configure(activebackground="#d9d9d9")
+        self.Button4.configure(text='''Shoot''', command=shoot)
 
     def run(self):
         self.root.mainloop()
