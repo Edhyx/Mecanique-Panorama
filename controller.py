@@ -18,6 +18,10 @@ class Controller:
     def __init__(self, model):
 
         self.model = model
+        p = subprocess.Popen("rm -Rf tmp", stdout=subprocess.PIPE, shell=True) #Delete tmp directory
+        (output, err) = p.communicate()
+        p = subprocess.Popen("mkdir tmp", stdout=subprocess.PIPE, shell=True) #Create empty tmp directory
+        (output, err) = p.communicate()
         self.default_tmp_path = "tmp/" #TODO change with temp dir on Linux like /tmp
 
     def hello(self):
