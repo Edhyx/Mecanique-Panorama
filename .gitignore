@@ -1,0 +1,6 @@
+*.pyc
+
+tmp/aa\.png
+
+tmp/vv\.jpg
+tmp/
