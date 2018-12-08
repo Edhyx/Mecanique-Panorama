@@ -36,24 +36,45 @@ class View:
     def first_page(self, frame, controller):
         for widget in self.frame.winfo_children():
             widget.destroy()
-        for row_index in range(2):
-            Tk.Grid.rowconfigure(self.frame, row_index, weight=1)
-        for col_index in range(4):
-            Tk.Grid.columnconfigure(self.frame, col_index, weight=1)
-        btn_iso = Tk.Button(self.frame, text='ISO', command=lambda: self.iso_page(self.frame, self.controller)) #create a button inside frame
-        btn_iso.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_aper = Tk.Button(self.frame, text='Aperture', command=lambda: self.aperture_page(self.frame, self.controller)) #create a button inside frame
-        btn_aper.grid(row=0, column=1, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_inter = Tk.Button(self.frame, text='Intervall', command=lambda: self.intervall_page(self.frame, self.controller)) #create a button inside frame
-        btn_inter.grid(row=1, column=0, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_live = Tk.Button(self.frame, text='Live View', command=self.live_view_page) #create a button inside frame
-        btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_quit = Tk.Button(self.frame, text='Quit', command=quit) #create a button inside frame
-        btn_quit.grid(row=1, column=2, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_info = Tk.Button(self.frame, text='Infos', command=lambda: self.info_page(self.frame, self.controller)) #create a button inside frame
-        btn_info.grid(row=0, column=3, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_ = Tk.Button(self.frame, text='Start', command=lambda: self.start(self.frame, self.controller)) #create a button inside frame
-        btn_.grid(row=1, column=3, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
+
+
+        self.Intervall_button = Tk.Button(self.frame)
+        self.Intervall_button.place(relx=0.025, rely=0.063, height=175, width=175)
+        self.Intervall_button.configure(activebackground="#d9d9d9")
+        self.Intervall_button.configure(text='''Intervall''', command=lambda: self.intervall_page(self.frame, self.controller))
+        self.Intervall_button.configure(width=179)
+
+        self.Iso_button = Tk.Button(self.frame)
+        self.Iso_button.place(relx=0.269, rely=0.063, height=175, width=175)
+        self.Iso_button.configure(activebackground="#d9d9d9")
+        self.Iso_button.configure(text='''ISO''', command=lambda: self.iso_page(self.frame, self.controller))
+
+        self.Aperture_button = Tk.Button(self.frame)
+        self.Aperture_button.place(relx=0.513, rely=0.063, height=175, width=175)
+        self.Aperture_button.configure(activebackground="#d9d9d9")
+        self.Aperture_button.configure(text='''Aperture''', command=lambda: self.aperture_page(self.frame, self.controller))
+
+        self.Liveview_button = Tk.Button(self.frame)
+        self.Liveview_button.place(relx=0.756, rely=0.063, height=175, width=175)
+        self.Liveview_button.configure(activebackground="#d9d9d9")
+        self.Liveview_button.configure(text='''Live View''', command=self.live_view_page)
+
+        self.Infos_button = Tk.Button(self.frame)
+        self.Infos_button.place(relx=0.138, rely=0.563, height=175, width=175)
+        self.Infos_button.configure(activebackground="#d9d9d9")
+        self.Infos_button.configure(text='''Infos''', command=lambda: self.info_page(self.frame, self.controller))
+
+        self.Start_button = Tk.Button(self.frame)
+        self.Start_button.place(relx=0.388, rely=0.563, height=175, width=175)
+        self.Start_button.configure(activebackground="#d9d9d9")
+        self.Start_button.configure(background="#5dd88e")
+        self.Start_button.configure(text='''START''', command=lambda: self.start(self.frame, self.controller))
+
+        self.Quit_button = Tk.Button(self.frame)
+        self.Quit_button.place(relx=0.638, rely=0.563, height=175, width=175)
+        self.Quit_button.configure(activebackground="#d9d9d9")
+        self.Quit_button.configure(background="#d85959")
+        self.Quit_button.configure(text='''QUIT''', command=quit)
 
 
     #This page allows the selection of the ISO of the device
@@ -347,6 +368,6 @@ class View:
 
         self.btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
         self.btn_back.place(relx=0.025, rely=0.042, height=29, width=58)
-        
+
     def run(self):
         self.root.mainloop()
