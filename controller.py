@@ -146,5 +146,7 @@ class Controller:
         (output, err) = kill.communicate()
 
 
-    def info_function(self):
-        pass
+    def get_info(self):
+        p = subprocess.Popen("gphoto2 --auto-detect", stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+        return output

@@ -50,7 +50,7 @@ class View:
         btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
         btn_quit = Tk.Button(self.frame, text='Quit', command=quit) #create a button inside frame
         btn_quit.grid(row=1, column=2, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_info = Tk.Button(self.frame, text='Infos') #create a button inside frame
+        btn_info = Tk.Button(self.frame, text='Infos', command=lambda: self.info_page(self.frame, self.controller)) #create a button inside frame
         btn_info.grid(row=0, column=3, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
         btn_ = Tk.Button(self.frame, text='Start', command=lambda: self.start(self.frame, self.controller)) #create a button inside frame
         btn_.grid(row=1, column=3, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
@@ -337,6 +337,16 @@ class View:
         start_subprocess()
 
 
+    def info_page(self, frame, controller):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
 
+        self.Label_info = Tk.Label(self.frame)
+        self.Label_info.place(relx=0.138, rely=0.104, height=371, width=589)
+        self.Label_info.configure(text = self.controller.get_info())
+
+        self.btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
+        self.btn_back.place(relx=0.025, rely=0.042, height=29, width=58)
+        
     def run(self):
         self.root.mainloop()
