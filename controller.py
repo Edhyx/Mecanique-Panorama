@@ -13,9 +13,12 @@ except ModuleNotFoundError:
 
 import subprocess
 from os import listdir
+from intervall import Inter
 
 
 class Controller:
+    output = ""
+
     def __init__(self, model):
         self.model = model
         p = subprocess.Popen("rm -Rf tmp", stdout=subprocess.PIPE, shell=True) #Delete tmp directory
@@ -74,10 +77,10 @@ class Controller:
         return aperture_list
 
 
-        def set_aperture(self, selected_aperture):
-            command = "gphoto2 --set-config=/main/capturesettings/f-number=" + selected_aperture
-            p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-            (output, err) = p.communicate()
+    def set_aperture(self, selected_aperture):
+        command = "gphoto2 --set-config=/main/capturesettings/f-number=" + selected_aperture
+        p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
 
     def refresh_live_view_pictures(self, dir):
         if self.model != None:
@@ -96,30 +99,52 @@ class Controller:
         #TODO: set the output file
         #TODO: temp dir: self.default_tmp_path+"/img1.jpg"
         cmd = "gphoto2 --capture-image-and-download --filename tmp/"
-
-
         allfiles = listdir(self.default_tmp_path)
         imgfiles = []
-
         print allfiles
-
         for file in allfiles:
             if file.lower().endswith('.png') or file.lower().endswith('.jpg'):
                 imgfiles.append(file)
-
         nb = len(imgfiles)
-
         cmd = cmd + str(nb+1) + ".png"
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+        self.refresh_live_view_pictures(self.default_tmp_path)
+        rtrn = str(nb+1) + ".png"
+        return rtrn #TODO: return the name
 
+    def start(self, inter, label):
+        #create new dir in USBKEY if necessary
+        p = subprocess.Popen("mkdir /Volumes/USBKEY/MCphotos", stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
 
+        p = subprocess.Popen("ls /Volumes/USBKEY/MCphotos/ | wc -l", stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+        foldername = int(output) + 1
+        print "FOLDERNAME "
+        print foldername
+
+        cmd = "mkdir /Volumes/USBKEY/MCphotos/" + str(foldername)
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
-        self.refresh_live_view_pictures(self.default_tmp_path)
 
-        rtrn = str(nb+1) + ".png"
+        cmd = "gphoto2 --capture-image-and-download --filename /Volumes/USBKEY/MCphotos/" + str(foldername) + "/%05n.png -F " + str(inter.get_nbphotos()) + " -I " + str(inter.get_inter())
+        print cmd
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        while True:
+            output = p.stdout.readline()
+            if output == '' and p.poll() is not None:
+                break
+            if output:
+                print output.strip()
+                label.configure(text = output)
+                label.update()
 
-        return rtrn #TODO: return the name
+    def stop(self):
+        kill = subprocess.Popen("pkill -f gphoto2", stdout=subprocess.PIPE, shell=True)
+        (output, err) = kill.communicate()
+
 
     def info_function(self):
         pass
