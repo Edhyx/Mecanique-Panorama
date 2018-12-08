@@ -14,7 +14,7 @@ You can find a tutorial for this installation of gPhoto 2 on a Raspberry Pi [her
  From your command line:
 
 ```bash
-#First, update the system 
+#First, update the system
 $ sudo apt-get update
 
 # Install associated libraries and dependencies for Gphoto2 to work
@@ -50,10 +50,10 @@ $ cd..
 # Install Pillow (PIL)
 $ pip install Pillow
 
-# Or use easy_install to install Pillow 
+# Or use easy_install to install Pillow
 $ easy_install Pillow
 
-# Install Tkinter 
+# Install Tkinter
 $ pip install Tkinter
 
 # Clone this repository
@@ -65,6 +65,12 @@ $ cd Mechanic-Panorama
 # Run the application
 $ python main.py
 ```
+
+### System
+
+* It is recommended to use a USB key with a capacity greater than or equal to 32GB.
+
+* Your USB stick must be formatted in **FAT32** and be named exactly **"USBKEY"**.
 
 ### Compatibility
 
