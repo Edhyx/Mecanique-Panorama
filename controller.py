@@ -2,6 +2,7 @@
     File name: controller.py
     Author: Maxime FELICI, Meggan ESCARTEFIGUE, Mohamed Anis BEN MAHMOUD, Zeineb LAKNECH
     Python Version: 2.7
+    This class handles calls to the gphoto2 software
 '''
 
 
@@ -16,18 +17,12 @@ from os import listdir
 
 class Controller:
     def __init__(self, model):
-
         self.model = model
         p = subprocess.Popen("rm -Rf tmp", stdout=subprocess.PIPE, shell=True) #Delete tmp directory
         (output, err) = p.communicate()
         p = subprocess.Popen("mkdir tmp", stdout=subprocess.PIPE, shell=True) #Create empty tmp directory
         (output, err) = p.communicate()
         self.default_tmp_path = "tmp/" #TODO change with temp dir on Linux like /tmp
-
-    def hello(self):
-        p = subprocess.Popen("ls", stdout=subprocess.PIPE, shell=True)
-        (output, err) = p.communicate()
-        print output
 
     def get_iso(self):
         iso_list = []

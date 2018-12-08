@@ -2,6 +2,7 @@
     File name: view.py
     Author: Maxime FELICI, Meggan ESCARTEFIGUE, Mohamed Anis BEN MAHMOUD, Zeineb LAKNECH
     Python Version: 2.7
+    This class manages the Human Machine Interface of the program.
 '''
 
 
@@ -27,10 +28,9 @@ class View:
         self.model = Model()
         self.controller = Controller(self.model)
 
-        self.first_page(self.frame, self.controller)
+        self.first_page(self.frame, self.controller) #Prints the menu page
 
-
-
+    #This page shows the different selection buttons
     def first_page(self, frame, controller):
         for widget in self.frame.winfo_children():
             widget.destroy()
@@ -54,6 +54,7 @@ class View:
         btn_.grid(row=1, column=3, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 
 
+    #This page allows the selection of the ISO of the device
     def iso_page(self, frame, controller):
         for widget in frame.winfo_children():
                 widget.destroy()
@@ -64,13 +65,11 @@ class View:
             self.first_page(self.frame, self.controller)
 
         def printer(event, listbox, label2):
-            #print("SELECTED=",self.listbox.get(self.listbox.curselection()))
             index = self.listbox.curselection()[0]
-            # get the line's text
-            global seltext
+            global seltext # get the line's text
             seltext= self.listbox.get(index)
             self.label2["text"]="ISO : " + seltext
-            print("Seltext = ", seltext)
+            print("ISO = ", seltext)
 
         for row_index in range(2):
             Tk.Grid.rowconfigure(self.frame, row_index, weight=1)
@@ -93,6 +92,8 @@ class View:
 
         self.listbox.bind("<<ListboxSelect>>", lambda _: printer(self, self.listbox, self.label2))
 
+
+    #This page allows the selection of the Aperture of the device
     def aperture_page(self, frame, controller):
         for widget in frame.winfo_children():
                 widget.destroy()
@@ -103,13 +104,11 @@ class View:
             self.first_page(self.frame, self.controller)
 
         def printer(event, listbox, label2):
-            #print("SELECTED=",self.listbox.get(self.listbox.curselection()))
-            index = self.listbox.curselection()[0]
-            # get the line's text
+            index = self.listbox.curselection()[0] # get the line's text
             global seltext
             seltext= self.listbox.get(index)
             self.label2["text"]="APERTURE : " + seltext
-            print("Seltext = ", seltext)
+            print("Aperture = ", seltext)
 
 
         for row_index in range(2):
@@ -133,9 +132,10 @@ class View:
 
         self.listbox.bind("<<ListboxSelect>>", lambda _: printer(self, self.listbox, self.label2))
 
+    #This page allows you to take a preview.
+    #It is possible to take several previews and to browse them.
+    #These previews will be erased at the next launch of the program.
     def live_view_page(self):
-        print "Live view selected"
-
         for widget in self.frame.winfo_children():
             widget.destroy()
 
@@ -169,19 +169,6 @@ class View:
 
         label = Tk.Label(self.frame, borderwidth=2) # ,relief='solid'
         label.grid(row=2, column=2, pady= 25,padx= 25, rowspan=2,columnspan=2, sticky=Tk.S)
-
-        '''
-        btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
-        btn_back.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
-        btn_shoot = Tk.Button(self.frame, text='Previsualisation', command=shoot)
-        btn_shoot.grid(row=1, column=0, padx=25, pady=25, sticky=Tk.N+Tk.W)
-        btn_previous = Tk.Button(self.frame, text='Previous', command=show_previous)
-        btn_previous.grid(row=2, column=1, padx=25, pady=25, sticky=Tk.N+Tk.W)
-        btn_next = Tk.Button(self.frame, text='Next', command=show_next)
-        btn_next.grid(row=2, column=2, padx=25, pady=25, sticky=Tk.N+Tk.W)
-        '''
-
-
         self.Button1 = Tk.Button(self.frame)
         self.Button1.place(relx=0.025, rely=0.771, height=30, width=80)
         self.Button1.configure(activebackground="#d9d9d9")
