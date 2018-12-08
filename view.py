@@ -14,6 +14,7 @@ except ModuleNotFoundError:
 from model import Model
 from controller import Controller
 from PIL import Image, ImageTk  #PIL used to display pictures in liveView
+import tkMessageBox
 
 class View:
     def __init__(self):
@@ -42,7 +43,7 @@ class View:
         btn_iso.grid(row=0, column=0, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
         btn_aper = Tk.Button(self.frame, text='Aperture', command=lambda: self.aperture_page(self.frame, self.controller)) #create a button inside frame
         btn_aper.grid(row=0, column=1, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-        btn_inter = Tk.Button(self.frame, text='Intervall') #create a button inside frame
+        btn_inter = Tk.Button(self.frame, text='Intervall', command=lambda: self.intervall_page()) #create a button inside frame
         btn_inter.grid(row=1, column=0, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
         btn_live = Tk.Button(self.frame, text='Live View', command=self.live_view_page) #create a button inside frame
         btn_live.grid(row=1, column=1, padx=25, pady=25, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
@@ -190,6 +191,107 @@ class View:
         self.Button4.place(relx=0.025, rely=0.688, height=30, width=80)
         self.Button4.configure(activebackground="#d9d9d9")
         self.Button4.configure(text='''Shoot''', command=shoot)
+
+    def intervall_page(self):
+
+
+#        def intervall_ok():
+#            init_interface()
+
+        def calculation():
+            nbphotos = (int(self.Spinbox1.get())*3600 + int(self.Spinbox1_2.get())*60 + int(self.Spinbox1_1.get()))/int(self.Spinbox_interval.get())
+            text = "Nb Photos = " + str(nbphotos)
+            self.Label7.configure(text = text)
+
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+
+
+        self.btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
+        self.btn_back.place(relx=0.025, rely=0.042, height=29, width=58)
+
+        #HOURS
+        self.Spinbox1 = Tk.Spinbox(self.frame, from_=1.0, to=100.0, command = calculation)
+        self.Spinbox1.place(relx=0.238, rely=0.521, relheight=0.125, relwidth=0.075)
+        self.Spinbox1.configure(activebackground="#f9f9f9")
+        self.Spinbox1.configure(background="white")
+        self.Spinbox1.configure(highlightbackground="black")
+        self.Spinbox1.configure(justify='center')
+        self.Spinbox1.configure(selectbackground="#c4c4c4")
+        self.Spinbox1.configure(from_=0, to=48)
+        self.Spinbox1.configure(width=48)
+
+        #SEC0NDS
+        self.Spinbox1_1 = Tk.Spinbox(self.frame, from_=1.0, to=100.0, command = calculation)
+        self.Spinbox1_1.place(relx=0.563, rely=0.521, relheight=0.125, relwidth=0.075)
+        self.Spinbox1_1.configure(activebackground="#f9f9f9")
+        self.Spinbox1_1.configure(background="white")
+        self.Spinbox1_1.configure(highlightbackground="black")
+        self.Spinbox1_1.configure(justify='center')
+        self.Spinbox1_1.configure(selectbackground="#c4c4c4")
+        self.Spinbox1_1.configure(from_=0, to=60)
+
+        #MINUTES
+        self.Spinbox1_2 = Tk.Spinbox(self.frame, from_=1.0, to=100.0, command = calculation)
+        self.Spinbox1_2.place(relx=0.388, rely=0.521, relheight=0.125, relwidth=0.075)
+        self.Spinbox1_2.configure(activebackground="#f9f9f9")
+        self.Spinbox1_2.configure(background="white")
+        self.Spinbox1_2.configure(highlightbackground="black")
+        self.Spinbox1_2.configure(justify='center')
+        self.Spinbox1_2.configure(selectbackground="#c4c4c4")
+        self.Spinbox1_2.configure(from_=0, to=60)
+
+        self.Label1 = Tk.Label(self.frame)
+        self.Label1.place(relx=0.325, rely=0.563, height=21, width=42)
+        self.Label1.configure(text='''Hours''')
+
+        self.Label2 = Tk.Label(self.frame)
+        self.Label2.place(relx=0.475, rely=0.563, height=21, width=56)
+        self.Label2.configure(text='''Minutes''')
+
+        self.Label3 = Tk.Label(self.frame)
+        self.Label3.place(relx=0.65, rely=0.563, height=21, width=58)
+        self.Label3.configure(text='''Seconds''')
+
+        self.ok_button = Tk.Button(self.frame)
+        self.ok_button.place(relx=0.913, rely=0.917, height=29, width=45)
+        self.ok_button.configure(activebackground="#d9d9d9")
+        self.ok_button.configure(text='''OK''')
+
+        self.Label4 = Tk.Label(self.frame)
+        self.Label4.place(relx=0.063, rely=0.542, height=41, width=128)
+        self.Label4.configure(font='Helvetica 20 bold')
+        self.Label4.configure(text='''Duration :''')
+        self.Label4.configure(width=128)
+
+        self.Label5 = Tk.Label(self.frame)
+        self.Label5.place(relx=0.063, rely=0.292, height=41, width=128)
+        self.Label5.configure(activebackground="#f9f9f9")
+        self.Label5.configure(font='Helvetica 20 bold')
+        self.Label5.configure(justify='left')
+        self.Label5.configure(text='''Interval :''')
+
+
+        self.Label7 = Tk.Label(self.frame)
+        self.Label7.place(relx=0.063, rely=0.792, height=41, width=250)
+        self.Label7.configure(activebackground="#f9f9f9")
+        self.Label7.configure(font='Helvetica 20 bold')
+        self.Label7.configure(justify='left')
+        self.Label7.configure(text='''Nb Photos :''')
+
+
+        #INTERVAL
+        self.Spinbox_interval = Tk.Spinbox(self.frame, from_=1.0, to=100.0, command = calculation)
+        self.Spinbox_interval.place(relx=0.238, rely=0.271, relheight=0.125, relwidth=0.075)
+        self.Spinbox_interval.configure(activebackground="#f9f9f9")
+        self.Spinbox_interval.configure(background="white")
+        self.Spinbox_interval.configure(highlightbackground="black")
+        self.Spinbox_interval.configure(justify='center')
+        self.Spinbox_interval.configure(from_=3, to=300)
+
+        self.Label6 = Tk.Label(self.frame)
+        self.Label6.place(relx=0.338, rely=0.313, height=21, width=58)
+        self.Label6.configure(text='''Seconds''')
 
     def run(self):
         self.root.mainloop()
