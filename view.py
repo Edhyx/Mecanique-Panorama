@@ -363,8 +363,12 @@ class View:
             widget.destroy()
 
         self.Label_info = Tk.Label(self.frame)
-        self.Label_info.place(relx=0.138, rely=0.104, height=371, width=589)
+        self.Label_info.place(relx=0.138, rely=0.104, height=200, width=589)
         self.Label_info.configure(text = self.controller.get_info())
+
+        self.Label_info2 = Tk.Label(self.frame)
+        self.Label_info2.place(relx=0.138, rely=0.404, height=200, width=589)
+        self.Label_info2.configure(text = "Mechanic-Panorama - Version 1.0")
 
         self.btn_back = Tk.Button(self.frame, text='Back', command=lambda: self.first_page(self.frame, self.controller)) #create a button inside frame
         self.btn_back.place(relx=0.025, rely=0.042, height=29, width=58)
