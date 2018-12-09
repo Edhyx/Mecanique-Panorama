@@ -41,7 +41,7 @@ class View:
         self.Intervall_button = Tk.Button(self.frame)
         self.Intervall_button.place(relx=0.025, rely=0.063, height=175, width=175)
         self.Intervall_button.configure(activebackground="#d9d9d9")
-        self.Intervall_button.configure(text='''Intervall''', command=lambda: self.intervall_page(self.frame, self.controller))
+        self.Intervall_button.configure(text='''Interval''', command=lambda: self.intervall_page(self.frame, self.controller))
         self.Intervall_button.configure(width=179)
 
         self.Iso_button = Tk.Button(self.frame)
