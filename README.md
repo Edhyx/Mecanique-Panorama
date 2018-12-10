@@ -6,40 +6,12 @@ Mechanic Panorama is an interactive video installation. It reproduces 24h landsc
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Compile Gphoto2 and libphoto2 from sources
-
-**WARNING !!!**
-
-We proposed a modification of gphoto2 sources using a fork on Github, in order to make the software completely compatible with our camera, the Sony Alpha 6300. However, the compiled archive is not yet available on the developer's website. We will show you how to compile the sources of libgphoto2. Once the compiled archive of libgphoto2 version 2.5.21 or higher is available, it will no longer be necessary to perform this operation.
-
-For autoreconf to succeed, you require the following tools:
-
-	automake
-	autoconf
-	pkg-config (to detect additional library dependencies)
-	autopoint (needed if installing from github)
-	gettext  (possibly from -dev or -devel package)
-	libtool  (possibly from -dev or -devel package)
-
-in versions compatible with each other and with libgphoto2. Most
-combinations on current GNU/Linux systems work, whereas BSD systems tend to have some compatibility problems.
-
-```bash
-#First, clone libgphoto2
-$ git clone https://github.com/gphoto/libgphoto2.git
-
-#Then start the compilation
-$ autoreconf --install --symlink
-$ ./configure --prefix=/usr/local
-$ make
-$ make install
-```
 
 
 ### How To Use
 
 To clone and run this application, you'll need [Git](https://git-scm.com), [Python 2.7](https://www.python.org/download/releases/2.7/), Tkinter, PIL and [gPhoto 2](http://gphoto.org) installed on your computer.
-You can find a tutorial for this installation of gPhoto 2 on a Raspberry Pi [here](https://medium.com/@cgulabrani/controlling-your-dslr-through-raspberry-pi-ad4896f5e225).
+We will use a script to install libgphoto2 and gphoto2.
 
  From your command line:
 
@@ -48,32 +20,19 @@ You can find a tutorial for this installation of gPhoto 2 on a Raspberry Pi [her
 $ sudo apt-get update
 
 # Install associated libraries and dependencies for Gphoto2 to work
-$ sudo apt-get install libltdl-dev libusb-dev libexif-dev libpopt-dev
+$ git clone https://github.com/gonzalo/gphoto2-updater.git
+$ cd gphoto2-updater
+$ sudo ./gphoto2-updater.sh
+```
 
-# Install libusb
-$ wget http://ftp.de.debian.org/debian/pool/main/libu/libusbx/libusbx_1.0.11.orig.tar.bz2
-$ tar xjvf libusbx_1.0.11.orig.tar.bz2
-$ cd libusbx-1.0.11/
-$ ./configure
-$ make
-$ sudo make install
-$ cd..
+Then, in the script, type **1** then **ENTER**. It will install the latest dev version of libgphoto2 and gPhoto2.
 
+Then we will install the dependencies for Python :
 
-# Install gphoto2
-$ wget http://downloads.sourceforge.net/project/gphoto/gphoto/2.5.2/gphoto2-2.5.2.tar.bz2
-$ tar xjvf gphoto2–2.5.2.tar.bz2
-$ cd gphoto2–2.5.2/
-$ ./configure
-$ make
-$ sudo make install
-$ cd..
-
+```bash
 # Install Pillow (PIL)
-$ pip install Pillow
-
-# Or use easy_install to install Pillow
-$ easy_install Pillow
+$ sudo apt-get install python-imaging
+$ sudo apt-get install python-imaging-tk
 
 # Install Tkinter
 $ pip install Tkinter
