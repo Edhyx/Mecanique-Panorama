@@ -57,24 +57,36 @@ class Controller:
 
 
     def get_aperture(self):
-        aperture_list = []
-        p = subprocess.Popen("gphoto2 --get-config=/main/capturesettings/f-number", stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen("gphoto2 --get-config /main/status/cameramodel", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
-        end_line = output.find("END")
-        choice_line = output.find("Choice")
-        sub_chain = output[choice_line:end_line]
-        print("sub chain : " + sub_chain)
+        print output
+        index = output.find('ILCE-6300')
+        if index == -1:
+            aperture_list = []
+            p = subprocess.Popen("gphoto2 --get-config=/main/capturesettings/f-number", stdout=subprocess.PIPE, shell=True)
+            (output, err) = p.communicate()
 
-        while len(sub_chain)>10:
-            sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
-            sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
-            aperture = sub_chain[0:sub_chain.find("\n")]
-            sub_chain = sub_chain[sub_chain.find("\n")+1:len(sub_chain)]
-            aperture_list.append(aperture)
+            end_line = output.find("END")
+            choice_line = output.find("Choice")
+            sub_chain = output[choice_line:end_line]
+            print("sub chain : " + sub_chain)
 
-        print aperture_list
-        return aperture_list
+            while len(sub_chain)>10:
+                sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
+                sub_chain=sub_chain[sub_chain.find(" ")+1:len(sub_chain)]
+                aperture = sub_chain[0:sub_chain.find("\n")]
+                sub_chain = sub_chain[sub_chain.find("\n")+1:len(sub_chain)]
+                aperture_list.append(aperture)
+
+            print aperture_list
+            return aperture_list
+        else:
+            aperture_list=["3.5", "4", "5", "5.6", "6.3", "7.1", "8","9","10","11", "13", "14", "16", "18", "20", "22"]
+            return aperture_list
+
+
+
 
 
     def set_aperture(self, selected_aperture):
