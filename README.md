@@ -1,6 +1,6 @@
-# Mechanic-Panorama
+# Mecanique-Panorama
 
-Mechanic Panorama is an interactive video installation. It reproduces 24h landscapes videos captured from windows of various cities inhabitants.
+Mecanique Panorama is an interactive video installation. It reproduces 24h landscapes videos captured from windows of various cities inhabitants.
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ $ sudo apt-get install python-imaging-tk
 $ pip install Tkinter
 
 # Clone this repository
-$ git clone https://github.com/Edhyx/Mechanic-Panorama
+$ git clone https://github.com/Edhyx/Mechanique-Panorama
 
 # Go into the repository
 $ cd Mechanic-Panorama
