@@ -320,13 +320,15 @@ class View:
 
     def start(self, frame, controller):
 
+        label_text = Tk.StringVar()
+        label_text.set("START")
 
         def start_subprocess():
-            self.controller.start(self.inter, self.Label5)
-
+            self.controller.start(self.inter, self.Label5, self.root, label_text)
+            #self.first_page(self.frame, self.controller)
 
         def stop_subprocess():
-            self.controller.stop()
+            self.controller.stop(self.root)
             self.first_page(self.frame, self.controller)
 
         for widget in self.frame.winfo_children():
@@ -340,7 +342,7 @@ class View:
         self.Label5.configure(activebackground="#f9f9f9")
         self.Label5.configure(font='Helvetica 15 bold')
         self.Label5.configure(justify='left')
-        self.Label5.configure(text="TEXT")
+        self.Label5.configure(textvariable = label_text)
         self.Label5.update()
 
         self.Button1 = Tk.Button(self.frame)
@@ -355,6 +357,7 @@ class View:
 
         print(self.inter.get_nbphotos())
         print(self.inter.get_inter())
+        #root.update_idletasks()
         start_subprocess()
 
 
