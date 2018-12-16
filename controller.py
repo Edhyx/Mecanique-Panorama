@@ -150,7 +150,17 @@ class Controller:
             cmd = "gphoto2 --capture-image-and-download --filename /media/pi/USBKEY/MCphotos/" + str(foldername) + "/" + filename + ".png"
             print cmd
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-            (output, err) = p.communicate()
+
+            compt2 = 0
+            while p.poll() is None:
+                #print('Still sleeping')
+                compt2 =+ 1
+                time.sleep(1)
+                if compt2 > inter.get_inter()*2:
+                    p1 = subprocess.Popen("pkill gphoto2", stdout=subprocess.PIPE, shell=True)
+                    (output, err) = p1.communicate()
+                    print "ERROR WITH THIS PHOTO ! Gphoto killed to avoid blocking"
+
 
             elapsed = time.time() - start
             print elapsed
