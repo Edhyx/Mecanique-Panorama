@@ -88,7 +88,7 @@ class Controller:
             print aperture_list
             return aperture_list
         else:
-            aperture_list=["3.5", "4", "5", "5.6", "6.3", "7.1", "8","9","10","11", "13", "14", "16", "18", "20", "22"]
+            aperture_list=["3,5", "4", "5", "5,6", "6,3", "7,1", "8","9","10","11", "13", "14", "16", "18", "20", "22"]
             return aperture_list
 
 
@@ -147,7 +147,7 @@ class Controller:
             filename = str(compt)
             filename = filename.zfill(5)
             print "filename = " + filename
-            cmd = "gphoto2 --capture-image-and-download --filename /Volumes/USBKEY/MCphotos/" + str(foldername) + "/" + filename + ".png"
+            cmd = "gphoto2 --capture-image-and-download --filename /media/pi/USBKEY/MCphotos/" + str(foldername) + "/" + filename + ".png"
             print cmd
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
             (output, err) = p.communicate()
@@ -169,16 +169,16 @@ class Controller:
 
 
         #create new dir in USBKEY if necessary
-        p = subprocess.Popen("mkdir /Volumes/USBKEY/MCphotos", stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen("mkdir /media/pi/USBKEY/MCphotos", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
-        p = subprocess.Popen("ls /Volumes/USBKEY/MCphotos/ | wc -l", stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen("ls /media/pi/USBKEY/MCphotos/ | wc -l", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         foldername = int(output) + 1
         print "FOLDERNAME "
         print foldername
 
-        cmd = "mkdir /Volumes/USBKEY/MCphotos/" + str(foldername)
+        cmd = "mkdir /media/pi/USBKEY/MCphotos/" + str(foldername)
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
