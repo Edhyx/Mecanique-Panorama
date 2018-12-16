@@ -154,14 +154,12 @@ class Controller:
             compt2 = 0
             while p.poll() is None:
                 #print('Still sleeping')
-                compt2 =+ 1
+                compt2 = compt2+1
                 time.sleep(1)
                 if compt2 > inter.get_inter()*2:
                     p1 = subprocess.Popen("pkill gphoto2", stdout=subprocess.PIPE, shell=True)
                     (output, err) = p1.communicate()
                     print "ERROR WITH THIS PHOTO ! Gphoto killed to avoid blocking"
-
-
             elapsed = time.time() - start
             print elapsed
             time_inter = inter.get_inter()
@@ -172,10 +170,6 @@ class Controller:
                 after_id = root.after(0, shoot)
             if compt >= inter.get_nbphotos():
                 self.stop(root)
-
-
-
-
 
 
         #create new dir in USBKEY if necessary
@@ -191,41 +185,7 @@ class Controller:
         cmd = "mkdir /media/pi/USBKEY/MCphotos/" + str(foldername)
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
-
         shoot()
-
-        # for x in range(0, inter.get_nbphotos()):
-            # filename = str(x)
-            # filename = filename.zfill(5)
-            # print "filename = " + filename
-            # cmd = "gphoto2 --capture-image-and-download --filename /Users/maxime/Desktop/MCphotos/" + str(foldername) + "/" + filename + ".png"
-            # print cmd
-            # p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-            # (output, err) = p.communicate()
-            # label.configure(text = output)
-            # label.update()
-            # while True:
-            #     output = p.stdout.readline()
-            #     if output == '' and p.poll() is not None:
-            #         break
-            #     if output:
-            #         print output.strip()
-            #         label.configure(text = output)
-            #         label.update()
-
-
-
-        # cmd = "gphoto2 --capture-image-and-download --filename /Volumes/USBKEY/MCphotos/" + str(foldername) + "/%05n.png -F " + str(inter.get_nbphotos()) + " -I " + str(inter.get_inter())
-        # print cmd
-        # p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        # while True:
-        #     output = p.stdout.readline()
-        #     if output == '' and p.poll() is not None:
-        #         break
-        #     if output:
-        #         print output.strip()
-        #         label.configure(text = output)
-        #         label.update()
 
     def stop(self, root):
         global after_id
