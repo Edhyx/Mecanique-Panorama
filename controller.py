@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 '''
+
     File name: controller.py
     Author: Maxime FELICI, Meggan ESCARTEFIGUE, Mohamed Anis BEN MAHMOUD, Zeineb LAKNECH
     Python Version: 2.7
@@ -14,7 +16,11 @@ except ModuleNotFoundError:
 import subprocess
 from os import listdir
 from intervall import Inter
+import time
+import os
 
+after_id = None
+compt = 0
 
 class Controller:
     output = ""
@@ -125,7 +131,43 @@ class Controller:
         rtrn = str(nb+1) + ".png"
         return rtrn #TODO: return the name
 
-    def start(self, inter, label):
+    def start(self, inter, label, root, label_text):
+
+        # var = Tk.StringVar()
+        # label.configure(textvariable=var)
+
+        def shoot():
+            start = time.time()
+            global compt
+            global after_id
+            compt += 1
+            textlabel = "Photo " + str(compt) + "/" + str(inter.get_nbphotos())
+            label_text.set(textlabel)
+            label.update()
+            filename = str(compt)
+            filename = filename.zfill(5)
+            print "filename = " + filename
+            cmd = "gphoto2 --capture-image-and-download --filename /Volumes/USBKEY/MCphotos/" + str(foldername) + "/" + filename + ".png"
+            print cmd
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+            (output, err) = p.communicate()
+
+            elapsed = time.time() - start
+            print elapsed
+            time_inter = inter.get_inter()
+            if elapsed < time_inter:
+                diff = int((time_inter - elapsed)*1000)
+                after_id = root.after(diff, shoot)
+            else:
+                after_id = root.after(0, shoot)
+            if compt >= inter.get_nbphotos():
+                self.stop(root)
+
+
+
+
+
+
         #create new dir in USBKEY if necessary
         p = subprocess.Popen("mkdir /Volumes/USBKEY/MCphotos", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
@@ -140,22 +182,48 @@ class Controller:
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
 
+        shoot()
 
-        cmd = "gphoto2 --capture-image-and-download --filename /Volumes/USBKEY/MCphotos/" + str(foldername) + "/%05n.png -F " + str(inter.get_nbphotos()) + " -I " + str(inter.get_inter())
-        print cmd
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        while True:
-            output = p.stdout.readline()
-            if output == '' and p.poll() is not None:
-                break
-            if output:
-                print output.strip()
-                label.configure(text = output)
-                label.update()
+        # for x in range(0, inter.get_nbphotos()):
+            # filename = str(x)
+            # filename = filename.zfill(5)
+            # print "filename = " + filename
+            # cmd = "gphoto2 --capture-image-and-download --filename /Users/maxime/Desktop/MCphotos/" + str(foldername) + "/" + filename + ".png"
+            # print cmd
+            # p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+            # (output, err) = p.communicate()
+            # label.configure(text = output)
+            # label.update()
+            # while True:
+            #     output = p.stdout.readline()
+            #     if output == '' and p.poll() is not None:
+            #         break
+            #     if output:
+            #         print output.strip()
+            #         label.configure(text = output)
+            #         label.update()
 
-    def stop(self):
-        kill = subprocess.Popen("pkill -f gphoto2", stdout=subprocess.PIPE, shell=True)
-        (output, err) = kill.communicate()
+
+
+        # cmd = "gphoto2 --capture-image-and-download --filename /Volumes/USBKEY/MCphotos/" + str(foldername) + "/%05n.png -F " + str(inter.get_nbphotos()) + " -I " + str(inter.get_inter())
+        # print cmd
+        # p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        # while True:
+        #     output = p.stdout.readline()
+        #     if output == '' and p.poll() is not None:
+        #         break
+        #     if output:
+        #         print output.strip()
+        #         label.configure(text = output)
+        #         label.update()
+
+    def stop(self, root):
+        global after_id
+        if after_id:
+            root.after_cancel(after_id)
+            after_id = None
+        # kill = subprocess.Popen("pkill -f gphoto2", stdout=subprocess.PIPE, shell=True)
+        # (output, err) = kill.communicate()
 
 
     def get_info(self):
